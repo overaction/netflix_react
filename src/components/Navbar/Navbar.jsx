@@ -32,6 +32,7 @@ const Navbar = () => {
                     <span>새로운 콘텐츠</span>
                     <span>내 목록</span>
                 </div>
+                
                 <div className="right">
                     <Search className="icon" />
                     <span>어린이용</span>
