@@ -1,7 +1,28 @@
 import { InfoOutlined, PlayArrow } from '@material-ui/icons'
+import axios from 'axios';
+import { useEffect, useState } from 'react'
 import "./featured.scss"
 
 const Featured = ({type}) => {
+    const [content, setContent] = useState({});
+
+    useEffect(() => {
+        const getRandomContent = async () => {
+            try {
+                const res = await axios.get(`/movies/random?type=${type}`, {
+                    headers: {
+                        token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM2UxNDQzYmI1ODUwOTU3OTk4NzE1OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzMTYzMDc4NCwiZXhwIjoxNjMyMDYyNzg0fQ.iXjZKES3hdUlQlk1rDWD1xbQ4ARurdYVD4PIZ6U7Ex0',
+                    },
+                })
+                setContent(res.data[0]);
+            }catch(err) {
+                console.log(err);
+            }
+        }
+        getRandomContent();
+    },[type]);
+
+    console.log(content);
     return (
         <div className="featured">
             {type && (
@@ -26,19 +47,16 @@ const Featured = ({type}) => {
                 </div>
             )}
             <img
-                src="https://cdn.mos.cms.futurecdn.net/vCaXTTTftCNeasohTjUZNQ-1200-80.jpg"
+                src={content.img}
                 alt=""
             />
             <div className="info">
                 <img
-                    src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1"
+                    src={content.imgTitle}
                     alt=""
                 />
                 <span className="desc">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Ullam aspernatur placeat autem, quaerat ipsa voluptates
-                    voluptatem explicabo et sint, nemo aperiam commodi esse.
-                    Reiciendis quibusdam animi laborum eaque sint similique.
+                    {content.desc}
                 </span>
                 <div className="buttons">
                     <button className="play">
