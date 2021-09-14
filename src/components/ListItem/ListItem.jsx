@@ -1,6 +1,7 @@
 import { Add, PlayArrow, ThumbDownAltOutlined, ThumbUpAltOutlined } from '@material-ui/icons'
 import axios from 'axios';
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import './listItem.scss'
 
 const ListItem = ({idx, item}) => {
@@ -23,6 +24,10 @@ const ListItem = ({idx, item}) => {
         getMovie();
     },[item])
     return (
+        <Link to={{
+            pathname: '/watch',
+            movie: movie
+        }}>
         <div
             className="listItem"
             style={{ left: isHovered && idx * 255 - 50 + idx * 5 }}
@@ -56,6 +61,7 @@ const ListItem = ({idx, item}) => {
                 </>
             )}
         </div>
+        </Link>
     )
 }
 
