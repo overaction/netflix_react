@@ -1,11 +1,14 @@
 import "./navbar.scss"
 import { ArrowDropDown, Notifications, Search } from '@material-ui/icons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../authContext/AuthContext';
+import { logout } from '../../authContext/AuthAction';
 const Navbar = () => {
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [sposition, setsPosition] = useState(0);
+    const {dispatch} = useContext(AuthContext);
     const handle = () => {
         const po = window.pageYOffset;
         setsPosition(po);
@@ -52,7 +55,7 @@ const Navbar = () => {
                         <ArrowDropDown className="icon" />
                         <div className="options">
                             <span> 환경설정</span>
-                            <span> 로그아웃</span>
+                            <span onClick={() => dispatch(logout())}> 로그아웃</span>
                         </div>
                     </div>
                 </div>
