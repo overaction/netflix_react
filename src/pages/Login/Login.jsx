@@ -1,7 +1,17 @@
-import { useRef, useState } from 'react'
-import "./login.scss"
+import { useContext, useState } from 'react'
+import { login } from '../../authContext/apiCalls';
+import { AuthContext } from '../../authContext/AuthContext';
+import './login.scss'
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const {dispatch} = useContext(AuthContext);
+    
+    const handleLogin = (e) => {
+        e.preventDefault();
+        login({email,password},dispatch);
+    }
     return (
         <div className="login">
             <div className="top">
@@ -20,9 +30,10 @@ const Login = () => {
                         <input
                             type="email"
                             placeholder="이메일 또는 전화번호"
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-                        <input type="password" placeholder="비밀번호" />
-                        <button>로그인</button>
+                        <input type="password" placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)}/>
+                        <button onClick={handleLogin}>로그인</button>
                     </div>
                     <div className="bottom">
                         <span>
